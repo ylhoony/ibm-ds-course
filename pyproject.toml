@@ -13,6 +13,7 @@ dash = "^2.15.0"
 numpy = "^1.26.4"
 requests = "^2.31.0"
 ipykernel = "^6.29.3"
+beautifulsoup4 = "^4.12.3"
 
 
 [build-system]
