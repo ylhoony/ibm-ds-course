@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "ibm-ds-course"
+version = "0.1.0"
+description = ""
+authors = ["Hoon Lee <yl.hoony@gmail.com>"]
+readme = "README.md"
+packages = [{include = "ibm_ds_course"}]
+
+[tool.poetry.dependencies]
+python = "3.12.2"
+pandas = "^2.2.1"
+dash = "^2.15.0"
+numpy = "^1.26.4"
+requests = "^2.31.0"
+ipykernel = "^6.29.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
