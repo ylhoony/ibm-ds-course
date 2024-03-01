@@ -1,8 +1,10 @@
 # Import required libraries
 import pandas as pd
 import dash
-import dash_html_components as html
-import dash_core_components as dcc
+from dash import html
+from dash import dcc
+# import dash_html_components as html
+# import dash_core_components as dcc
 from dash.dependencies import Input, Output
 import plotly.express as px
 
@@ -29,7 +31,8 @@ app.layout = html.Div(children=[html.H1('SpaceX Launch Records Dashboard',
                                                         value='ALL',
                                                         placeholder="Select launch site",
                                                         searchable=True,
-                                                        style={"width": "80%", "padding": "3px", "fontSize": "20px", "textAlignLast": "center"}),],
+                                                        style={"padding": "3px", "fontSize": "20px", "textAlignLast": "center", "width": "100%"}),],
+                                        style={"align-items": "center", "display": "flex", "justify-content": "center"}
                                 ),
                                 html.Br(),
 
@@ -48,8 +51,11 @@ app.layout = html.Div(children=[html.H1('SpaceX Launch Records Dashboard',
                                                     step=1000,
                                                     marks={0: '0',
                                                             100: '100'},
-                                                    value=[min_payload, max_payload])
-                                ]),
+                                                    value=[min_payload, max_payload],
+                                                    # style={"width": "80%"},
+                                                    ), ],
+                                    # style={"align-items": "center", "display": "flex", "justify-content": "center"}
+                                ),
 
                                 # TASK 4: Add a scatter chart to show the correlation between payload and launch success
                                 html.Div(dcc.Graph(id='success-payload-scatter-chart')),
@@ -70,25 +76,27 @@ def get_charts(entered_site, entered_payload):
         pie_fig = px.pie(spacex_df, 
                         values='class', 
                         names='Launch Site', 
-                        title='Total Success Rate')
-        # return fig
+                        labels=["class"],
+                        title='Launch Success Count for All Sites')
+        pie_fig.update_traces(textposition='inside', textinfo='value+percent')
 
         df_payload = spacex_df[(spacex_df['Payload Mass (kg)'] > payload_from) & (spacex_df['Payload Mass (kg)'] < payload_to)]
         scatter_fig = px.scatter(df_payload, 
                                 x='Payload Mass (kg)',
                                 y='class', 
                                 color='Launch Site',
-                                title='Success by Payload at All Launch site'
+                                title='Payload vs. Launch Outcome for All Launch Site'
                                 )
     else:
         # return the outcomes piechart for a selected site
         filtered_df = spacex_df[spacex_df['Launch Site'] == entered_site]
-        data = filtered_df['class'].value_counts(normalize=True).to_frame().reset_index()
+        data = filtered_df['class'].value_counts().to_frame().reset_index()
+        print(data)
         pie_fig = px.pie(data, 
-                        values='proportion', 
+                        values='count', 
                         names='class',
-                        title=f'Total Success Rate at Launch site - {entered_site}')
-        # return fig
+                        title=f'Launch Success Ratio at Launch site - {entered_site}')
+        pie_fig.update_traces(textposition='inside', textinfo='value+percent')
 
         df_payload = filtered_df[(filtered_df['Payload Mass (kg)'] > payload_from) & (filtered_df['Payload Mass (kg)'] < payload_to)]
         scatter_fig = px.scatter(df_payload, 
@@ -104,9 +112,6 @@ def get_charts(entered_site, entered_payload):
 
 # TASK 4:
 # Add a callback function for `site-dropdown` and `payload-slider` as inputs, `success-payload-scatter-chart` as output
-
-
-
 
 
 # Run the app
