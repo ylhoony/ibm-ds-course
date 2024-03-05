@@ -88,7 +88,7 @@ def get_charts(entered_site, entered_payload):
         # return the outcomes piechart for a selected site
         filtered_df = spacex_df[spacex_df['Launch Site'] == entered_site]
         data = filtered_df['class'].value_counts().to_frame().reset_index()
-        print(data)
+
         pie_fig = px.pie(data, 
                         values='count', 
                         names='class',
