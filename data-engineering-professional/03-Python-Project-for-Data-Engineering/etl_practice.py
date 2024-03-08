@@ -28,8 +28,8 @@ if not glob.glob(src_path):
 with zipfile.ZipFile(src_path, 'r') as zip:
     zip.extractall(path)
 
-log_file = "etl_practice-log_file.txt"
-target_file = "etl_practice-transformed_data.csv"
+log_file = f"{path}/log_file.txt"
+target_file = f"{path}/transformed_data.csv"
 
 # Task 1: Extraction
 
