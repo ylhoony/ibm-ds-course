@@ -20,6 +20,7 @@ ipython-sql = "^0.5.0"
 folium = "^0.16.0"
 wget = "^3.2"
 scikit-learn = "^1.4.1.post1"
+python3-wget = "^0.0.2b1"
 
 
 [build-system]
