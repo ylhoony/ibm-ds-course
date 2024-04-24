@@ -25,7 +25,7 @@ default_args = {
 
 # define the DAG
 dag = DAG(
-    'my-first-dag',
+    dag_id = 'my-first-dag',
     default_args=default_args,
     description='My first DAG',
     schedule_interval=timedelta(days=1),
